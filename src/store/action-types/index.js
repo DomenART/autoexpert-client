@@ -1,3 +1,13 @@
-export const AUTH_LOGIN = 'AUTH_LOGIN';
-export const AUTH_CHECK = 'AUTH_CHECK';
-export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const AUTH_LOGIN = 'AUTH_LOGIN'
+export const AUTH_CHECK = 'AUTH_CHECK'
+export const AUTH_LOGOUT = 'AUTH_LOGOUT'
+export const AUTH_REGISTER_REQUEST = 'AUTH_REGISTER_REQUEST'
+export const AUTH_REGISTER_SUCCESS = 'AUTH_REGISTER_SUCCESS'
+export const AUTH_REGISTER_FAILURE = 'AUTH_REGISTER_FAILURE'
+export const AUTH_REGISTER_RESET = 'AUTH_REGISTER_RESET'
+
+export const API = 'API'
+export const API_START = 'API_START'
+export const API_END = 'API_END'
+export const ACCESS_DENIED = 'ACCESS_DENIED'
+export const API_ERROR = 'API_ERROR'
