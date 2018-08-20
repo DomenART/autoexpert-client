@@ -3,20 +3,23 @@ import { apiAction } from '../../components/Http'
 
 export const registerFetch = credentials => dispatch => {
   apiAction({
-    url: 'register',
+    url: 'auth/register',
+    method: 'POST',
+    data: credentials,
 
     onStart: () => {
       dispatch({ type: ActionTypes.AUTH_REGISTER_REQUEST })
     },
 
-    onSuccess: (data) => {
-      console.log('data', data)
+    onSuccess: () => {
       dispatch({ type: ActionTypes.AUTH_REGISTER_SUCCESS })
     },
 
-    onFailure: (error) => {
-      console.log('error', error)
-      dispatch({ type: ActionTypes.AUTH_REGISTER_FAILURE })
+    onFailure: data => {
+      dispatch({
+        type: ActionTypes.AUTH_REGISTER_FAILURE,
+        payload: data
+      })
     }
   })
 }

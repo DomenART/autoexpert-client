@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { store } from '../store'
 import { authLogout } from '../store/actions/auth'
-// import * as ActionTypes from '../store/action-types'
+import * as ActionTypes from '../store/action-types'
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
@@ -29,7 +29,7 @@ export const apiAction = ({
   headersOverride = null
 }) => {
   let headers = {}
-  const BASE_URL = "http://api.expert.local/"
+  const BASE_URL = "http://api.expert.local/api/"
   const dataOrParams = ["GET", "DELETE"].includes(method) ? "params" : "data"
 
   if (accessToken) {
@@ -59,6 +59,6 @@ export const apiAction = ({
       onSuccess(data)
     })
     .catch(error => {
-      onFailure(error)
+      onFailure(error.response.data)
     })
 }

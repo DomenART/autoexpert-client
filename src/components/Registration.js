@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import green from '@material-ui/core/colors/green'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import { registerFetch, registerReset } from '../store/actions/register'
 
 const LoginLink = props => <Link to="/login" {...props} />
@@ -72,35 +73,26 @@ const styles = theme => ({
 })
 
 class Registration extends Component {
-  // state = {
-  //   processed: false
-  // }
-
   componentWillUnmount() {
     this.props.registerReset()
   }
 
   render() {
-    // const { processed } = this.state
-    const { classes, registerFetch, isLoading, isSuccess } = this.props
+    const { classes, registerFetch, isLoading, isSuccess, errors } = this.props
 
     const buttonClassname = classNames({
-      [classes.buttonSuccess]: isSuccess/* && processed*/
+      [classes.buttonSuccess]: isSuccess
     })
 
     const onSubmit = (event) => {
       event.preventDefault()
-
-      // this.setState({
-      //   processed: true
-      // })
 
       // console.log(event)
 
       registerFetch()
     }
 
-    if (isSuccess/* && processed*/) {
+    if (isSuccess) {
       return <Redirect to='/login' />
     }
 
@@ -114,15 +106,17 @@ class Registration extends Component {
             </Avatar>
             <Typography variant="headline">Регистрация</Typography>
             <form className={classes.form} onSubmit={onSubmit}>
-              <FormControl margin="normal" required fullWidth>
+              <FormControl margin="normal" required fullWidth error={!!errors.name}>
                 <InputLabel htmlFor="name">Имя:</InputLabel>
                 <Input id="name" name="name" autoComplete="name" autoFocus />
+                {errors.name && <FormHelperText id="name-text">{errors.name[0]}</FormHelperText>}
               </FormControl>
-              <FormControl margin="normal" required fullWidth>
+              <FormControl margin="normal" required fullWidth error={!!errors.email}>
                 <InputLabel htmlFor="email">E-mail:</InputLabel>
-                <Input id="email" name="email" autoComplete="email" autoFocus />
+                <Input id="email" name="email" autoComplete="email" />
+                {errors.email && <FormHelperText id="email-text">{errors.email[0]}</FormHelperText>}
               </FormControl>
-              <FormControl margin="normal" required fullWidth>
+              <FormControl margin="normal" required fullWidth error={!!errors.password}>
                 <InputLabel htmlFor="password">Пароль:</InputLabel>
                 <Input
                   name="password"
@@ -130,6 +124,7 @@ class Registration extends Component {
                   id="password"
                   autoComplete="current-password"
                 />
+                {errors.password && <FormHelperText id="password-text">{errors.password[0]}</FormHelperText>}
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password_confirmation">Повторить пароль:</InputLabel>
@@ -169,9 +164,6 @@ class Registration extends Component {
   }
 }
 
-// function Registration(props) {
-// }
-
 Registration.propTypes = {
   classes: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -179,14 +171,14 @@ Registration.propTypes = {
   isSuccess: PropTypes.bool.isRequired,
   registerFetch: PropTypes.func.isRequired,
   registerReset: PropTypes.func.isRequired,
-  // errors: PropTypes.array.isRequired
+  errors: PropTypes.object
 }
 
 const mapStateToProps = ({ auth, register }) => ({
   isAuthenticated: auth.isAuthenticated,
   isLoading: register.isLoading,
   isSuccess: register.isSuccess,
-  // errors: register.errors
+  errors: register.errors
 })
 
 export default connect(

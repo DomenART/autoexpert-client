@@ -3,7 +3,7 @@ import * as ActionTypes from '../action-types'
 const initialState = {
   isLoading : false,
   isSuccess : false,
-  errors: []
+  errors: {}
 }
 
 const Register = (state = initialState, { type, payload = null }) => {
